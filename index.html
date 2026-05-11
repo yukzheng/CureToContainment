@@ -1,89 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>From Cure to Containment</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      height: 100vh;
-      overflow: hidden;
+    *, *::before, *::after {
+      box-sizing: border-box;
     }
-    body {
+
+    :root {
+      /* Tune these if the Polaroid moves on different screens */
+      --blue-band-top: 17vh;
+      --blue-band-height: min(46vh, 520px);
+      /* Higher = ARCHIVE sits farther up (onto the gray Polaroid margin) */
+      --gray-strip-bottom: 18vh;
+    }
+
+    @media (max-height: 700px) {
+      :root {
+        --blue-band-top: 12vh;
+        --blue-band-height: min(50vh, 460px);
+        --gray-strip-bottom: 17vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --blue-band-top: 14vh;
+        --gray-strip-bottom: 16vh;
+      }
+    }
+
+    html, body {
+      min-height: 100vh;
       margin: 0;
+    }
+
+    body {
+      position: relative;
       background: #f5f5f2;
       font-family: 'Atkinson Hyperlegible', sans-serif;
-      text-align: center;
-      padding-top: 20vh;
-
-      background-image: url("Untitled_Artwork.jpg"); /* your image file */
+      background-image: url("Untitled_Artwork.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      background-attachment: fixed;
+      /* scroll keeps the Polaroid aligned with the absolutely positioned text bands */
+      background-attachment: scroll;
+      overflow-x: hidden;
     }
+
+    /* Title + ledes: centered inside the blue “photo” band */
+    .blue-band {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(92vw, 440px);
+      top: var(--blue-band-top);
+      height: var(--blue-band-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px 20px 24px;
+    }
+
     h1 {
-      letter-spacing: 3px;
+      margin: 0;
+      font-size: clamp(26px, 5vw, 40px);
+      letter-spacing: 8px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #EEF2F5;
     }
+
+    .lede {
+      margin: 28px 0 0;
+      width: 100%;
+      color: #cdcdcd;
+      font-size: clamp(15px, 2.3vw, 20px);
+      line-height: 1.45;
+    }
+
+    .lede + .lede {
+      margin-top: 18px;
+    }
+
+    /* ARCHIVE: sits on the Polaroid gray margin below the blue area */
+    .gray-strip {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: var(--gray-strip-bottom);
+      width: min(92vw, 440px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 16px;
+    }
+
     button {
-      margin-top: 200px;
-      /*padding: 18px 36px;*/
       border: none;
       background: transparent;
       cursor: pointer;
       color: #565151;
       font-family: 'Atkinson Hyperlegible', sans-serif;
-      font-size: 40px;
-      font-weight: 1000;
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 8px 16px;
     }
+
     button:hover {
-      background: transparent;
-      color: white;
-    }
-    p {
-      text-align: left;
-      margin-left: 525px;
+      color: #fff;
     }
   </style>
 </head>
 
 <body>
-  <h1>CURE TO<br>CONTAINMENT</h1>
-  <style>
-  h1 {
-    margin-top: 0px;
-    font-size: 40px;
-    letter-spacing: 8px;
-    font-weight: 700;
-    line-height: 1.1;
-    color: #EEF2F5;
-    font-family: 'Atkinson Hyperlegible', sans-serif;
-    text-align: center;
-  }
-</style>
-  <p style="margin-top: 50px; color: #cdcdcd; text-align: left; max-width: 440px; margin-left: 530px; margin-right: auto; font-size: 20px; display: block;">
-    A digital archive of pharmaceutical objects and anatomical residues
-  </p>
-  <p style="margin-top: 50px; color: #cdcdcd; text-align: left; max-width: 440px; margin-left: 530px; margin-right: auto; font-size: 20px; display: block;">
-    “What was once administered becomes what is left behind.”
-  </p>
+  <section class="blue-band" aria-label="Introduction">
+    <h1>CURE TO<br>CONTAINMENT</h1>
 
-  <button onclick="location.href='archive.html'">
-    ARCHIVE
-  </button>
-  <style>
-    button {
-      margin-top: 115px;
-      margin-right: 250px;
-    }
-    footer {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      font-size: 12px;
-      color: #666;
-    }
-  </style>
-  <!-- <footer>fill</footer> -->
+    <p class="lede">
+      A digital archive of pharmaceutical objects and anatomical residues
+    </p>
+
+    <p class="lede">
+      “What was once administered becomes what is left behind.”
+    </p>
+  </section>
+
+  <div class="gray-strip">
+    <button type="button" onclick="location.href='archive.html'">
+      ARCHIVE
+    </button>
+  </div>
 </body>
-</html
+</html>

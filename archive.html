@@ -1,95 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Archive - From Cure to Containment</title>
 
   <style>
+
     body {
       margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
       font-family: Arial, sans-serif;
-      background: #f5f5f2;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /*
+      Background JPG is 1920×1080 (16:9). Hotspots must live in the same box as
+      the photo so percentages track the image.
+
+      If the viewport is not 16:9, letterboxing avoids cropping the photo; if you
+      prefer edge-to-edge cropping instead, swap object-fit on .background to
+      cover and accept that hotspots need recalibration per breakpoint.
+    */
+    .container {
+      position: relative;
+      width: min(100vw, calc(100vh * 16 / 9));
+      height: min(100vh, calc(100vw * 9 / 16));
+      aspect-ratio: 16 / 9;
+    }
+
+    /* FULLSCREEN BACKGROUND */
+    .background {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
     }
 
     /* HEADER */
     .header {
-      padding: 40px;
-      text-align: center;
+      position: absolute;
+      top: 50px;
+      left: 60px;
+      z-index: 10;
+      pointer-events: auto;
+
+      color: white;
+      mix-blend-mode: difference;
     }
 
     .header h1 {
-      letter-spacing: 3px;
-      font-weight: 300;
       margin: 0;
+      font-size: 64px;
+      font-weight: 300;
+      letter-spacing: 8px;
     }
 
     .header p {
-      opacity: 0.6;
-      margin-top: 5px;
-    }
-
-    /* LAYOUT */
-    .container {
-      display: flex;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 200px;
-      padding: 20px;
-      border-right: 1px solid #ddd;
-    }
-
-    .sidebar h3 {
-      font-size: 12px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-
-    .sidebar p {
-      font-size: 13px;
-      margin: 6px 0;
+      margin-top: 15px;
+      font-size: 14px;
       opacity: 0.7;
-    }
-
-    /* GRID */
-    .grid {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      padding: 20px;
-    }
-
-    /* CARD */
-    .card {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-decoration: none;
-      color: black;
-      transition: 0.2s ease;
-      background: #f5f5f2;
-    }
-
-    .card:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    .img {
-      width: 100%;
-      height: 180px;
-      background: #e0e0e0;
-      margin-bottom: 10px;
-    }
-
-    .code {
-      font-size: 13px;
       letter-spacing: 1px;
     }
 
-    .label {
-      font-size: 12px;
-      opacity: 0.6;
+    /*
+      PNGs are full-frame (same aspect as stage) with transparency; stack them
+      aligned to the photo. pointer-events: none — clicks are handled on .container
+      so we can pick the topmost opaque pixel across layers.
+    */
+    .entry-link {
+      position: absolute;
+      inset: 0;
+      display: block;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .entry-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      transform-origin: center center;
+      transition: transform 0.22s ease;
+    }
+
+    .entry-link.entry-hot {
+      z-index: 3;
+    }
+
+    /* IMG_0096: scale on hover but keep paint order so layers above still cover it */
+    .entry-link.entry-hot.entry-link--no-hover-lift {
+      z-index: 2;
+    }
+
+    .entry-link.entry-hot img {
+      transform: scale(1.07);
     }
 
   </style>
@@ -97,73 +107,142 @@
 
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <h1>ARCHIVE</h1>
-    <p>Pharmaceutical containers and anatomical residues</p>
-  </div>
+  <div class="container" id="archive-stage">
 
-  <!-- MAIN LAYOUT -->
-  <div class="container">
+    <!-- BACKGROUND IMAGE -->
+    <img class="background"
+         src="IMG_0093.JPG"
+         alt="Archive Background">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <h3>CATEGORIES</h3>
-      <p>RX - Pharmaceutical</p>
-      <p>AN - Anatomical</p>
-      <p>TR - Transitional</p>
-      <p>UN - Unknown</p>
+    <!-- HEADER -->
+    <div class="header">
 
-      <br>
+      <h1>ARCHIVE</h1>
 
-      <h3>STATE</h3>
-      <p>Intact</p>
-      <p>Fragmented</p>
-      <p>Degraded</p>
-    </div>
-
-    <!-- GRID -->
-    <div class="grid">
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">RX-01-CC</div>
-        <div class="label">Cardboard Unit</div>
-      </a>
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">AN-14-FR</div>
-        <div class="label">Femoral Fragment</div>
-      </a>
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">TR-09-MX</div>
-        <div class="label">Transitional Object</div>
-      </a>
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">RX-07-DR</div>
-        <div class="label">Degraded Unit</div>
-      </a>
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">AN-02-CT</div>
-        <div class="label">Cortical Fragment</div>
-      </a>
-
-      <a href="entry.html" class="card">
-        <div class="img"></div>
-        <div class="code">UN-00-XX</div>
-        <div class="label">Indeterminate</div>
-      </a>
+      <p>
+        Pharmaceutical containers and anatomical residues
+      </p>
 
     </div>
 
+    <!-- Full-frame PNG overlays (same 16:9 canvas as background); order = paint order -->
+    <a href="entry1.html" class="entry-link">
+      <img src="IMG_0095.PNG" alt="RX-01">
+    </a>
+
+    <a href="entry2.html" class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0096.PNG" alt="AN-14">
+    </a>
+
+    <a href="entry3.html" class="entry-link">
+      <img src="IMG_0097.PNG" alt="TR-09">
+    </a>
+
+    <a href="entry4.html" class="entry-link">
+      <img src="IMG_0098.PNG" alt="RX-07">
+    </a>
+
   </div>
+
+  <script>
+    (function () {
+      var stage = document.getElementById('archive-stage');
+      if (!stage) return;
+
+      var ALPHA_THRESHOLD = 10;
+
+      function ensureHitCanvas(img) {
+        if (img._hitCanvas && img._hitNaturalW === img.naturalWidth) return;
+        if (!img.complete || !img.naturalWidth) return;
+        var c = document.createElement('canvas');
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        var ctx = c.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0);
+        img._hitCanvas = c;
+        img._hitNaturalW = img.naturalWidth;
+      }
+
+      function hitOpaque(img, clientX, clientY) {
+        try {
+          ensureHitCanvas(img);
+          if (!img._hitCanvas) return false;
+          var rect = img.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) return false;
+          var x = Math.floor((clientX - rect.left) * img.naturalWidth / rect.width);
+          var y = Math.floor((clientY - rect.top) * img.naturalHeight / rect.height);
+          if (x < 0 || y < 0 || x >= img.naturalWidth || y >= img.naturalHeight) return false;
+          var ctx = img._hitCanvas.getContext('2d', { willReadFrequently: true });
+          var a = ctx.getImageData(x, y, 1, 1).data[3];
+          return a >= ALPHA_THRESHOLD;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      function anchorsTopFirst() {
+        return [].slice.call(stage.querySelectorAll('.entry-link'));
+      }
+
+      function pickAnchor(clientX, clientY) {
+        var list = anchorsTopFirst();
+        for (var i = list.length - 1; i >= 0; i--) {
+          var img = list[i].querySelector('img');
+          if (img && hitOpaque(img, clientX, clientY)) return list[i];
+        }
+        return null;
+      }
+
+      stage.querySelectorAll('.entry-link img').forEach(function (img) {
+        function refreshHitMap() {
+          img._hitCanvas = null;
+          ensureHitCanvas(img);
+        }
+        img.addEventListener('load', refreshHitMap);
+        if (img.complete) refreshHitMap();
+      });
+
+      stage.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('.header')) return;
+        var picked = pickAnchor(e.clientX, e.clientY);
+        if (!picked) return;
+        e.preventDefault();
+        window.location.href = picked.href;
+      });
+
+      stage.addEventListener('auxclick', function (e) {
+        if (e.button !== 1) return;
+        if (e.target.closest && e.target.closest('.header')) return;
+        var picked = pickAnchor(e.clientX, e.clientY);
+        if (!picked) {
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        window.open(picked.href, '_blank');
+      });
+
+      var lastHot = null;
+      stage.addEventListener('mousemove', function (e) {
+        if (e.target.closest && e.target.closest('.header')) {
+          if (lastHot) lastHot.classList.remove('entry-hot');
+          lastHot = null;
+          stage.style.cursor = '';
+          return;
+        }
+        var picked = pickAnchor(e.clientX, e.clientY);
+        if (lastHot) lastHot.classList.remove('entry-hot');
+        lastHot = picked;
+        if (picked) picked.classList.add('entry-hot');
+        stage.style.cursor = picked ? 'pointer' : 'default';
+      });
+      stage.addEventListener('mouseleave', function () {
+        if (lastHot) lastHot.classList.remove('entry-hot');
+        lastHot = null;
+        stage.style.cursor = '';
+      });
+    })();
+  </script>
 
 </body>
 </html>
