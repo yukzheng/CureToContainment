@@ -1,98 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>RX-01-CC - From Cure to Containment</title>
+  <title>Archive Entry</title>
 
   <style>
-    body {
+
+    html, body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f2;
-    }
-
-    /* TOP BAR */
-    .topbar {
-      padding: 20px 40px;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .topbar a {
-      text-decoration: none;
-      color: black;
-      font-size: 13px;
-      letter-spacing: 1px;
-    }
-
-    /* MAIN LAYOUT */
-    .container {
-      display: flex;
-      height: calc(100vh - 70px);
-    }
-
-    /* IMAGE SIDE */
-    .image-side {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-right: 1px solid #ddd;
-    }
-
-    .image-box {
-      width: 70%;
-      max-height: 400px;
-      background: #e0e0e0;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 100%;
       overflow: hidden;
+      background: #000;
     }
 
-    .image-box img {
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container img {
       width: 100%;
-      height: auto;
-      max-height: 400px;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       display: block;
     }
 
-    /* TEXT SIDE */
-    .text-side {
-      width: 50%;
-      padding: 60px;
-      overflow-y: auto;
+    .back-to-archive {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 10;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
-    .id {
-      font-size: 13px;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
+    .back-to-archive:hover {
+      background: rgba(0, 0, 0, 0.65);
+      transform: scale(1.05);
     }
 
-    .section {
-      margin-bottom: 20px;
-    }
-
-    .label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      opacity: 0.6;
-      margin-bottom: 4px;
-    }
-
-    .value {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .note {
-      margin-top: 30px;
-      font-style: italic;
-      opacity: 0.8;
+    .back-to-archive svg {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
 
   </style>
@@ -100,65 +63,65 @@
 
 <body>
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <a href="archive.html">← BACK TO ARCHIVE</a>
-    <a href="index.html">HOME</a>
-  </div>
-
-  <!-- MAIN -->
   <div class="container">
-
-    <!-- IMAGE SIDE -->
-    <div class="image-side">
-      <div class="image-box">
-        <img src="IMG_0095.PNG" alt="RX-01 pharmaceutical container specimen">
-      </div>
-    </div>
-
-    <!-- TEXT SIDE -->
-    <div class="text-side">
-
-      <div class="id">ID: RX-01-CC</div>
-
-      <div class="section">
-        <div class="label">CLASSIFICATION</div>
-        <div class="value">Pharmaceutical Container (Cardboard Unit)</div>
-      </div>
-
-      <div class="section">
-        <div class="label">MATERIAL STATE</div>
-        <div class="value">Aged cellulose / compressed structure</div>
-      </div>
-
-      <div class="section">
-        <div class="label">PRESCRIBED FUNCTION</div>
-        <div class="value">
-          Encapsulation of powdered analgesic compound for oral administration.
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="label">OBSERVED RESULT</div>
-        <div class="value">
-          Original pharmaceutical contents no longer present. Internal cavity now contains a calcified fragment resembling cortical bone structure.
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="label">NOTES</div>
-        <div class="value">
-          The container retains its original function of containment, but the nature of what is contained has shifted from chemical intervention to anatomical residue.
-        </div>
-      </div>
-
-      <div class="note">
-        “Function does not disappear — it is reassigned.”
-      </div>
-
-    </div>
-
+    <img id="entry-image" src="" alt="">
   </div>
+
+  <a class="back-to-archive" href="archive.html" aria-label="Back to archive">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+  </a>
+
+  <script>
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const imgParam = params.get("img");
+
+    const entries = {
+
+      A0112: {
+        image: "IMG_0123.JPG",
+        title: "RX-01-CC"
+      },
+
+      A0111: {
+        image: "IMG_0122.JPG",
+        title: "AN-14-FR"
+      },
+
+      A0097: {
+        image: "IMG_0124.JPG",
+        title: "TR-09-MX"
+      },
+
+      A0099: {
+        image: "IMG_0125.JPG",
+        title: "RX-01-CC"
+      },
+
+      A0104: {
+        image: "IMG_0127.JPG",
+        title: "TR-09-MX"
+      }
+
+    };
+
+    const img = document.getElementById("entry-image");
+    const entry = id ? entries[id] : null;
+    const imageSrc = imgParam ? decodeURIComponent(imgParam) : entry ? entry.image : "";
+    const title = entry ? entry.title : "";
+
+    if (imageSrc) {
+      img.src = imageSrc;
+      img.alt = title;
+    } else {
+      img.removeAttribute("src");
+      img.alt = "";
+    }
+
+  </script>
 
 </body>
 </html>

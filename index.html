@@ -92,8 +92,9 @@
     .gray-strip {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      bottom: var(--gray-strip-bottom);
+      transform: translateX(calc(-50% - clamp(48px, 9.5vw, 124px)));
+      /* Match archive.html header nudge; small upward tweak from full -36px shift */
+      bottom: calc(var(--gray-strip-bottom) - 23px);
       width: min(92vw, 440px);
       display: flex;
       justify-content: center;

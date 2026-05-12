@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>Archive - From Cure to Containment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
 
@@ -9,7 +10,7 @@
       margin: 0;
       min-height: 100vh;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
       background: black;
       display: flex;
       align-items: center;
@@ -17,25 +18,21 @@
     }
 
     /*
-      Background JPG is 1920×1080 (16:9). Hotspots must live in the same box as
-      the photo so percentages track the image.
-
-      If the viewport is not 16:9, letterboxing avoids cropping the photo; if you
-      prefer edge-to-edge cropping instead, swap object-fit on .background to
-      cover and accept that hotspots need recalibration per breakpoint.
+      Stage fills the viewport; background and PNG overlays use the same
+      object-fit/object-position so pixels stay aligned for alpha hit-testing.
     */
     .container {
       position: relative;
-      width: min(100vw, calc(100vh * 16 / 9));
-      height: min(100vh, calc(100vw * 9 / 16));
-      aspect-ratio: 16 / 9;
+      width: 100vw;
+      height: 100vh;
     }
 
     /* FULLSCREEN BACKGROUND */
     .background {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
       display: block;
       pointer-events: none;
     }
@@ -43,33 +40,30 @@
     /* HEADER */
     .header {
       position: absolute;
-      top: 50px;
-      left: 60px;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      padding-top: calc(clamp(32px, 5vh, 56px) + 23px);
       z-index: 10;
       pointer-events: auto;
+      text-align: center;
+      max-width: min(90vw, 36rem);
 
-      color: white;
-      mix-blend-mode: difference;
+      color: #f2ebe3;
     }
 
     .header h1 {
       margin: 0;
-      font-size: 64px;
-      font-weight: 300;
-      letter-spacing: 8px;
-    }
-
-    .header p {
-      margin-top: 15px;
-      font-size: 14px;
-      opacity: 0.7;
-      letter-spacing: 1px;
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #f2ebe3;
     }
 
     /*
-      PNGs are full-frame (same aspect as stage) with transparency; stack them
-      aligned to the photo. pointer-events: none — clicks are handled on .container
-      so we can pick the topmost opaque pixel across layers.
+      PNGs are full-frame with transparency; stack them aligned to the photo.
+      pointer-events: none — clicks are handled on .container so we can pick
+      the topmost opaque pixel across layers.
     */
     .entry-link {
       position: absolute;
@@ -82,19 +76,16 @@
     .entry-link img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
       display: block;
       pointer-events: none;
       transform-origin: center center;
       transition: transform 0.22s ease;
     }
 
+    /* Keep original layer order even while hovered */
     .entry-link.entry-hot {
-      z-index: 3;
-    }
-
-    /* IMG_0096: scale on hover but keep paint order so layers above still cover it */
-    .entry-link.entry-hot.entry-link--no-hover-lift {
       z-index: 2;
     }
 
@@ -119,28 +110,78 @@
 
       <h1>ARCHIVE</h1>
 
-      <p>
-        Pharmaceutical containers and anatomical residues
-      </p>
-
     </div>
 
     <!-- Full-frame PNG overlays (same 16:9 canvas as background); order = paint order -->
-    <a href="entry1.html" class="entry-link">
-      <img src="IMG_0095.PNG" alt="RX-01">
+    <a href="entry.html?id=A0112" class="entry-link">
+      <img src="IMG_0112.PNG" alt="A0112">
+    </a>
+    
+    <a href="entry.html?id=A0111" class="entry-link">
+      <img src="IMG_0111.PNG" alt="A0111">
     </a>
 
-    <a href="entry2.html" class="entry-link entry-link--no-hover-lift">
-      <img src="IMG_0096.PNG" alt="AN-14">
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0096.PNG" alt="A0096">
+    </div>
+
+    <a href="entry.html?id=A0097" class="entry-link">
+      <img src="IMG_0097.PNG" alt="A0097">
     </a>
 
-    <a href="entry3.html" class="entry-link">
-      <img src="IMG_0097.PNG" alt="TR-09">
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0098.PNG" alt="A0098">
+    </div>
+
+    <a href="entry.html?id=A0099" class="entry-link">
+      <img src="IMG_0099.PNG" alt="A0099">
     </a>
 
-    <a href="entry4.html" class="entry-link">
-      <img src="IMG_0098.PNG" alt="RX-07">
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0100.PNG" alt="A0100">
+    </div>
+    <!-- <a href="entry.html" class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0100.PNG" alt="AN-14">
+    </a> -->
+
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0101.PNG" alt="A0101">
+    </div>
+    <!-- <a href="entry.html" class="entry-link">
+      <img src="IMG_0101.PNG" alt="TR-09">
+    </a> -->
+
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0102.PNG" alt="A0102">
+    </div>
+    <!-- <a href="entry.html" class="entry-link">
+      <img src="IMG_0102.PNG" alt="RX-07">
+    </a> -->
+
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0103.PNG" alt="A0103">
+    </div>
+    <!-- <a href="entry.html" class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0103.PNG" alt="AN-14">
+    </a> -->
+
+    <a href="entry.html?id=A0104" class="entry-link">
+      <img src="IMG_0104.PNG" alt="A0104">
     </a>
+
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0105.PNG" alt="A0105">
+    </div>
+    <!-- <a href="entry.html" class="entry-link">
+      <img src="IMG_0105.PNG" alt="RX-07">
+    </a> -->
+
+    <div class="entry-link entry-link--no-hover-lift">
+      <img src="IMG_0106.PNG" alt="A0106">
+    </div>
+    <!-- <a href="entry.html" class="entry-link">
+      <img src="IMG_0106.PNG" alt="RX-07">
+    </a> -->
 
   </div>
 
@@ -180,15 +221,17 @@
         }
       }
 
-      function anchorsTopFirst() {
-        return [].slice.call(stage.querySelectorAll('.entry-link'));
+      function entryImagesTopFirst() {
+        return [].slice.call(stage.querySelectorAll('.entry-link img'));
       }
 
       function pickAnchor(clientX, clientY) {
-        var list = anchorsTopFirst();
+        var list = entryImagesTopFirst();
         for (var i = list.length - 1; i >= 0; i--) {
-          var img = list[i].querySelector('img');
-          if (img && hitOpaque(img, clientX, clientY)) return list[i];
+          var img = list[i];
+          if (!hitOpaque(img, clientX, clientY)) continue;
+          var anchor = img.closest('a.entry-link');
+          return anchor || null;
         }
         return null;
       }
